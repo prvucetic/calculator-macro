@@ -1,0 +1,51 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="calculator-macro"/>
+
+    <!-- add our web resources -->
+    <web-resource key="calculator-macro-resources" name="calculator-macro Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+        <resource type="download" name="calculator-macro.css" location="/css/calculator-macro.css"/>
+        <resource type="download" name="calculator-macro.js" location="/js/calculator-macro.js"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>calculator-macro</context>
+    </web-resource>
+
+    <xhtml-macro name="calculator" class="com.predragvucetic.macro.CalculatorMacro" key='calculator-macro'>
+        <description key="macro.calculator.desc"/>
+        <category name="formatting"/>
+        <parameters>
+            <parameter name="Title" type="string"/>
+            <parameter name="Operation" type="enum" default="addition">
+                <value name="addition"/>
+                <value name="subtraction"/>
+                <value name="multiplication"/>
+                <value name="division"/>
+            </parameter>
+        </parameters>
+    </xhtml-macro>
+
+    <xwork name="calculator-action" key="calculator-action">
+        <package name="calculator" extends="default" namespace="/plugins/calculator">
+            <default-interceptor-ref name="defaultStack" />
+
+            <action name="calculate"
+                    class="com.predragvucetic.action.CalculatorAction">
+                <result name="success" type="velocity">/templates/calculator-action.vm</result>
+            </action>
+        </package>
+    </xwork>
+
+</atlassian-plugin>

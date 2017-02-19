@@ -1,0 +1,30 @@
+#requireResource("com.predragvucetic.calculator-macro:calculator-macro-resources")
+
+<h3>$title</h3>
+<br/>
+<div id="aui-message-bar"></div>
+<form class="aui">
+    <fieldset>
+        <div class="field-group">
+            <label for="first-operand">First operand<span class="aui-icon icon-required"> required</span></label>
+            <input class="text" type="text" id="first-operand" name="first-operand" title="First operand">
+            <div class="error"></div>
+        </div>
+        <div class="field-group">
+            <label for="operation">Operation</label>
+            <select class="select" id="operation" name="operation" title="Operation">
+                #foreach ($operation in $operations)
+                    <option #if ($operation.equals($defaultOperation)) selected #end>$operation</option>
+                #end
+            </select>
+        </div>
+        <div class="field-group">
+            <label for="second-operand">Second operand<span class="aui-icon icon-required"> required</span></label>
+            <input class="text" type="text" id="second-operand" name="second-operand" title="Second operand">
+            <div class="error"></div>
+        </div>
+        <div class="field-group">
+            <button class="aui-button aui-button-primary js-calculator-calculate">Calculate</button>
+        </div>
+    </fieldset>
+</form>
